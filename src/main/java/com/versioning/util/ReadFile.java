@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 public class ReadFile {
 
     /**
-     * read all java file from argument path
+     * read all java file path from argument path
      * @param path
-     * @return mapa key:file path  value:file content
+     * @return list of path
      */
     public List<Path> getAllJavaFilePath(String path) throws IOException {
         List<Path> collect = Files.walk(Paths.get(path))
