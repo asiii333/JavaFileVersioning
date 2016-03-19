@@ -18,12 +18,6 @@ import java.util.stream.Collectors;
  */
 public class ReadFile {
 
-    FilenameFilter javaFilter =  new FilenameFilter() {
-        public boolean accept(File dir, String name) {
-            return name.endsWith(".java");
-        }
-    };
-
     /**
      * read all java file from argument path
      * @param path
@@ -35,27 +29,5 @@ public class ReadFile {
                 .collect(Collectors.toList());
         return collect;
 
-    }
-
-    private File[] getAllFile(String path) {
-        File folder = new File("/path/to/files");
-        File[] listOfFiles = folder.listFiles(javaFilter);
-        return listOfFiles;
-    }
-
-    private  Map<String, String> readFile(File[] fileList){
-        Map<String, String> javaFile = new HashMap<>(fileList.length);
-
-        for (int i = 0; i < fileList.length; i++) {
-            File file = fileList[i];
-            try {
-                String path = file.getAbsolutePath();
-                String content = FileUtils.readFileToString(file);
-                javaFile.put(path,content);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return javaFile;
     }
 }
