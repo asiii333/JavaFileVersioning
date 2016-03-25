@@ -16,12 +16,15 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import com.versioning.data.FileXmlItem;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 public class XmlGenerator {
 
-    private static String projectPath = "D:\\Studia\\Semestr X\\Konfiguracje\\Java\\TestDirectory";
+    private static String projectPath = "C:\\Users\\Asia\\Documents\\JAVA\\10_semestr\\JavaFileVersioning\\src\\test\\testdir";
+
     private static String xmlTemplate = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<files><file></file></files>";
     private static String configFileName = "jfvconfig.xml";
     private static String fullConfigPath = projectPath + "\\" + configFileName;
@@ -30,6 +33,7 @@ public class XmlGenerator {
         //getConfigFile();
         ConfigManager configManager = new ConfigManager(projectPath);
         try {
+            //getConfigFile();
             configManager.loadFilesFromConfig();
             FilesContainer container = configManager.getFiles();
             //configManager.setFiles(getTestFileContainer());
@@ -70,18 +74,18 @@ public class XmlGenerator {
         }
     }
 
-    private static FilesContainer getTestFileContainer() {
+/*    private static FilesContainer getTestFileContainer() {
         FilesContainer container = new FilesContainer();
 
         for (int i = 0; i < 5; i++) {
             FileXmlItem item = new FileXmlItem();
             item.setName("item2_" + Integer.toString(i));
-            item.setMethods(i*4);
+            //item.setMethods(i*4);
             item.setVersion(new Float(1.5));
             
             container.addFile(item);
         }
 
         return container;
-    }
+    }*/
 }

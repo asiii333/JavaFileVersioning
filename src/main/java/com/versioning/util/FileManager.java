@@ -28,11 +28,18 @@ public class FileManager {
 
     }
 
+    /**
+     * Get info about file - absolute path + content
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public FileContent getFilesInfo(Path path) throws IOException {
         FileContent fileContent = new FileContent();
         fileContent.sourceCode = FileUtils.readFileToString(path.toFile());
         fileContent.path = path.toAbsolutePath().toString();
         return fileContent;
     }
+
 
 }

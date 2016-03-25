@@ -15,6 +15,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import com.versioning.data.FileXmlItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,7 +27,7 @@ public class ConfigManager {
 
     private static final String configFileName = "jfvconfig.xml";
     private String projectPath;
-    private FilesContainer files;
+    private FilesContainer files = new FilesContainer();
 
     public ConfigManager(String projectPath) {
         this.projectPath = projectPath;
@@ -53,7 +55,13 @@ public class ConfigManager {
         }
     }
 
-    public void loadFilesFromConfig() throws IOException {
+    public boolean loadFilesFromConfig() throws IOException {
+        File f = new File(getFullConfigPath());
+        if (!f.exists() ) {
+            FileXmlItem item = new FileXmlItem();
+            files.addFile(item);
+            return false;
+        }
         byte[] encoded = Files.readAllBytes(Paths.get(getFullConfigPath()));
         String xmlContent = new String(encoded, Charset.defaultCharset());
 
@@ -75,14 +83,16 @@ public class ConfigManager {
                     
                     FileXmlItem item = new FileXmlItem();
                     item.setName(docElement.getElementsByTagName("name").item(0).getTextContent());
-                    item.setMethods(Integer.parseInt(docElement.getElementsByTagName("methods").item(0).getTextContent()));
-                    item.setVersion(Float.parseFloat(docElement.getElementsByTagName("version").item(0).getTextContent()));
+                    item.setPrivatemethods(Integer.parseInt(docElement.getElementsByTagName("privatemethods").item(0).getTextContent()));
+                    item.setPublicmethods(Integer.parseInt(docElement.getElementsByTagName("publicmethods").item(0).getTextContent()));
+                    item.setVersion(docElement.getElementsByTagName("version").item(0).getTextContent());
                     files.addFile(item);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return true;
     }
     
     private String getXmlContent() {

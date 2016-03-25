@@ -16,7 +16,11 @@ import java.util.List;
  * Created by Asia on 2016-03-20.
  */
 public class AntlrMenager {
-
+    /**
+     * get info about file - numers of methodd etc..
+     * @param fileContent
+     * @return
+     */
     public FileInfo getFileInfo(FileContent fileContent){
         FileInfo fileInfo = new FileInfo();
         try {
@@ -32,9 +36,9 @@ public class AntlrMenager {
         TranslationUnit translationUnit = getTranslationUnit(fileContent);
         int privateMethods = countMethod( translationUnit.classDeclarations.get(0).privateDeclarations);
         int publicMethods = countMethod( translationUnit.classDeclarations.get(0).publicDeclarations);
-        fileInfo.path = fileContent.path;
-        fileInfo.publicMethod = publicMethods;
-        fileInfo.privateMethod = privateMethods;
+        fileInfo.setPath(fileContent.path);
+        fileInfo.setPublicMethod(publicMethods);
+        fileInfo.setPrivateMethod(privateMethods);
     }
     private TranslationUnit getTranslationUnit(FileContent fileContent){
         ANTLRInputStream stream = new ANTLRInputStream(fileContent.sourceCode);

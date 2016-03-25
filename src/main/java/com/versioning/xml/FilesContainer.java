@@ -1,5 +1,7 @@
 package com.versioning.xml;
 
+import com.versioning.data.FileXmlItem;
+
 import java.util.ArrayList;
 
 public class FilesContainer {
@@ -20,6 +22,14 @@ public class FilesContainer {
             files.remove(file);
             files.add(file);
         }
+    }
+    public FileXmlItem getXmlWithTheSameName(String name){
+        for(FileXmlItem item : files){
+            if (item.getName().equals(name)){
+                return item;
+            }
+        }
+        return null;
     }
 
     public void removeFile(FileXmlItem file) {
