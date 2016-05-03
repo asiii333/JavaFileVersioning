@@ -1,7 +1,3 @@
-/**
- * created by JavaFileVersioning
- * version 1.2
- */
 package com.versioning;
 
 import com.versioning.data.FileXmlItem;
@@ -9,22 +5,22 @@ import com.versioning.xml.FilesContainer;
 
 import java.io.*;
 
-/**
- * Created by Asia on 2016-03-22.
- */
 public class CommentManager {
     private FilesContainer generatedFilesContainer;
 
-    public void addComments(FilesContainer generatedFilesContainer){
+    public boolean addComments(FilesContainer generatedFilesContainer){
         this.generatedFilesContainer = generatedFilesContainer;
+        boolean success = true;
         for(FileXmlItem item : generatedFilesContainer.getFiles()){
             String comment = getComment(item);
             try {
                 addCommentToFile(comment, item);
             } catch (IOException e) {
+                success = false;
                 e.printStackTrace();
             }
         }
+        return success;
     }
 
     private void addCommentToFile(String comment,FileXmlItem item) throws IOException {

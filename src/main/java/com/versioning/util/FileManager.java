@@ -10,15 +10,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Asia on 2016-03-19.
- */
 public class FileManager {
 
     /**
      * read all java file path from argument path
      * @param path
      * @return list of path
+     * @throws java.io.IOException
      */
     public List<Path> getAllJavaFilePath(String path) throws IOException {
         List<Path> collect = Files.walk(Paths.get(path))

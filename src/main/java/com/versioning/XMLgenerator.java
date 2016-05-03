@@ -13,46 +13,40 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Asia on 2016-03-21.
- */
 public class XMLgenerator {
-   // public final static String PATH = "C:\\Users\\Asia\\Documents\\JAVA\\10_semestr\\JavaFileVersioning\\src\\test\\testdir";
 
-    private FilesContainer filesContainer= new FilesContainer();
-    private FilesContainer generatedFilesContainer= new FilesContainer();
-    private AntlrMenager antlrMenager= new AntlrMenager();
-    ConfigManager configManager; /*= new ConfigManager(PATH)*/
+    private FilesContainer filesContainer = new FilesContainer();
+    private FilesContainer generatedFilesContainer = new FilesContainer();
+    private AntlrMenager antlrMenager = new AntlrMenager();
+    ConfigManager configManager;
 
     private List<FileInfo> filesList = new ArrayList<>();
     FileManager fileManager = new FileManager();
     List<Path> pathsList = new ArrayList<>();
     private String path;
 
-    public XMLgenerator(String path){
+    public XMLgenerator(String path) {
         configManager = new ConfigManager(path);
         this.path = path;
     }
-    public FilesContainer generateXMLConfigFile(){
-        try {
-            getAllJavaFile();
-            generateFileInfo();
-            getXMLConfigFile();
-            generateXmlContent();
-            saveGeneratedXML();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    public FilesContainer generateXMLConfigFile() throws IOException {
+        getAllJavaFile();
+        generateFileInfo();
+        getXMLConfigFile();
+        generateXmlContent();
+        saveGeneratedXML();
+
         return generatedFilesContainer;
     }
 
     private void generateXmlContent() {
 
-       for(FileInfo file : filesList){
-           FileXmlItem config = filesContainer.getXmlWithTheSameName(file.getPath());
-           FileXmlItem newItem = generateNewXmlFile(config, file);
-           generatedFilesContainer.addFile(newItem);
-       }
+        for (FileInfo file : filesList) {
+            FileXmlItem config = filesContainer.getXmlWithTheSameName(file.getPath());
+            FileXmlItem newItem = generateNewXmlFile(config, file);
+            generatedFilesContainer.addFile(newItem);
+        }
 
     }
 
@@ -70,32 +64,33 @@ public class XMLgenerator {
 
     private boolean checkIfFileWasCommented(FileXmlItem config, FileInfo file) {
         boolean commented = false;
-        if(config != null){
+        if (config != null) {
             commented = true;
         }
         return commented;
     }
 
-    private String getFileVersion(FileXmlItem config, FileInfo file){
+    private String getFileVersion(FileXmlItem config, FileInfo file) {
         String version = "1.0";
-        if(config != null){
+        if (config != null) {
             version = config.getVersion();
-        }else{
+        } else {
             return version;
         }
         int firstPart = Integer.valueOf(version.split("\\.")[0]);
         int secondPart = Integer.valueOf(version.split("\\.")[1]);
-        if(config.getPrivatemethods() != file.getPrivateMethod() ){
+        if (config.getPrivatemethods() != file.getPrivateMethod()) {
             secondPart++;
         }
-        if(config.getPublicmethods() != file.getPublicMethod()){
+        if (config.getPublicmethods() != file.getPublicMethod()) {
             firstPart++;
             secondPart = 0;
         }
         version = firstPart + "." + secondPart;
         return version;
     }
-    private void saveGeneratedXML(){
+
+    private void saveGeneratedXML() {
         configManager.setFiles(generatedFilesContainer);
         configManager.saveXml();
     }
@@ -106,7 +101,7 @@ public class XMLgenerator {
     }
 
     private void generateFileInfo() throws IOException {
-        for(Path path : pathsList){
+        for (Path path : pathsList) {
             FileContent content = fileManager.getFilesInfo(path);
             FileInfo info = antlrMenager.getFileInfo(content);
             filesList.add(info);
@@ -116,6 +111,4 @@ public class XMLgenerator {
     private void getAllJavaFile() throws IOException {
         pathsList = fileManager.getAllJavaFilePath(path);
     }
-
-
 }

@@ -1,8 +1,5 @@
 package com.versioning.data;
 
-/**
- * Created by Asia on 2016-03-19.
- */
 public class FileInfo {
     private String path;
     private int publicMethod;

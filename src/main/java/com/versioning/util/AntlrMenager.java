@@ -12,9 +12,6 @@ import org.antlr.v4.runtime.RecognitionException;
 
 import java.util.List;
 
-/**
- * Created by Asia on 2016-03-20.
- */
 public class AntlrMenager {
     /**
      * get info about file - numers of methodd etc..
