@@ -53,16 +53,16 @@ public class XMLgenerator {
     private FileXmlItem generateNewXmlFile(FileXmlItem config, FileInfo file) {
         FileXmlItem newItem = new FileXmlItem();
         String version = getFileVersion(config, file);
-        boolean commented = checkIfFileWasCommented(config, file);
         newItem.setVersion(version);
         newItem.setPublicmethods(file.getPublicMethod());
         newItem.setPrivatemethods(file.getPrivateMethod());
         newItem.setName(file.getPath());
+        boolean commented = checkIfFileWasCommented(config);
         newItem.setCommented(commented);
         return newItem;
     }
 
-    private boolean checkIfFileWasCommented(FileXmlItem config, FileInfo file) {
+    private boolean checkIfFileWasCommented(FileXmlItem config) {
         boolean commented = false;
         if (config != null) {
             commented = true;

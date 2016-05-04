@@ -2,8 +2,8 @@ package com.versioning
 
 import com.versioning.data.FileInfo
 import com.versioning.data.FileXmlItem
-import com.versioning.xml.XmlGenerator
 import spock.lang.Specification
+import com.versioning.XMLgenerator
 
 /**
  * Created by Asia on 2016-03-22.

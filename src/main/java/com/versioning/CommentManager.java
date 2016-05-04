@@ -8,6 +8,8 @@ import java.io.*;
 public class CommentManager {
     private FilesContainer generatedFilesContainer;
 
+    private static final String COMMENT_SECOND_LINE = " * created by JavaFileVersioning";
+
     public boolean addComments(FilesContainer generatedFilesContainer){
         this.generatedFilesContainer = generatedFilesContainer;
         boolean success = true;
@@ -24,12 +26,24 @@ public class CommentManager {
     }
 
     private void addCommentToFile(String comment,FileXmlItem item) throws IOException {
-        if(item.isCommented()){
+        if(item.isCommented() || fileContainVersioningComment(item)){
             replaceComment(comment, item);
         }else{
             addNewComment(comment, item);
         }
 
+    }
+    private boolean fileContainVersioningComment(FileXmlItem item) throws IOException {
+        File mFile = new File(item.getName());
+        FileInputStream fis = new FileInputStream(mFile);
+        InputStreamReader inputStreamReader = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(inputStreamReader);
+        String firstLine = br.readLine();
+        String secondLine = br.readLine();
+        if(COMMENT_SECOND_LINE.equals(secondLine)){
+            return true;
+        }
+        return false;
     }
     private void addNewComment(String comment,FileXmlItem item) throws IOException {
         File mFile = new File(item.getName());
