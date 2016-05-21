@@ -10,10 +10,4 @@ public class MethodBody extends SyntaxTreeElement {
         super(ctx);
         block = new Block(ctx.block());
     }
-
-    @Override
-    public String toString() {
-        return block.toString() + "\n";
-    }
-
 }

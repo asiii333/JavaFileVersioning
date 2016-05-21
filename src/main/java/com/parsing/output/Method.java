@@ -1,4 +1,3 @@
-
 package com.parsing.output;
 
 import java.util.LinkedList;

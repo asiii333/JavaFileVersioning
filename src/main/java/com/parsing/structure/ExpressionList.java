@@ -18,14 +18,4 @@ public class ExpressionList extends SyntaxTreeElement {
             list.add(new Expression(expCon));
         }
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Expression exp : list) {
-            sb.append(exp).append(", ");
-        }
-        sb.setLength(sb.length() - 2);
-        return sb.toString();
-    }
 }

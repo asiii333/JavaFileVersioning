@@ -2,10 +2,8 @@ package com.parsing.structure;
 
 import com.parsing.util.TranslationUnit;
 import com.parsing.output.ContextHolder;
-import com.parsing.output.Output;
 import com.parsing.util.Utils;
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,57 +112,7 @@ public final class ClassDeclaration extends SyntaxTreeElement {
         return childCtx.getText().equals("void");
     }
 
-    @Override
-    public String toString() {
-        StringBuilder b = new StringBuilder();
-        b.append(Output.indent(0));
-        /*if (isAbstract) {
-            b.append("abstract ");
-        }*/
-        b.append("class ").append(name);
-        if (!extendImplementList.isEmpty()) {
-            b.append(" : ");
-            for (String s : extendImplementList) {
-                b.append("public ").append(s).append(", ");
-            }
-            b.setLength(b.length() - 2);
-        }
-        b.append("{\n");
-        Output.indentLevel++;
-        if (!publicDeclarations.isEmpty()) {
-            b.append(Output.indent(-1)).append("public:\n");
-        }
-        for (ClassBodyDeclaration decl : publicDeclarations) {
-            b.append(decl).append("\n");
-        }
-        if (!privateDeclarations.isEmpty()) {
-            b.append(Output.indent(-1)).append("private:\n");
-        }
-        for (ClassBodyDeclaration decl : privateDeclarations) {
-            b.append(decl).append("\n");
-        }
-        if (!protectedDeclarations.isEmpty()) {
-            b.append(Output.indent(-1)).append("protected:\n");
-        }
-        for (ClassBodyDeclaration decl : protectedDeclarations) {
-            b.append(decl).append("\n");
-        }
-        Output.indentLevel--;
-        b.append(Output.indent(0)).append("}\n\n");
-        return b.toString();
-    }
-
     public ClassBodyDeclaration getDeclaration(String name) {
         return allDeclarations.get(name);
     }
-
-    public boolean hasObjectMember(String name) {
-        ClassBodyDeclaration cbDecl = allDeclarations.get(name);
-        if (cbDecl != null && cbDecl.isObjectType()) {
-            return true;
-        }
-        return false;
-    }
-
-
 }

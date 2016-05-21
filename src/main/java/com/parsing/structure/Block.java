@@ -1,8 +1,6 @@
 package com.parsing.structure;
 
-import com.parsing.output.Output;
 import com.parsing.parser.JavaParser;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,18 +24,4 @@ public class Block extends SyntaxTreeElement {
     public List<BlockStatement> getBlockStatements() {
         return blockStatements;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\n");
-        Output.indentLevel++;
-        for (BlockStatement bs : blockStatements) {
-            sb.append(Output.indent(0)).append(bs).append("\n");
-        }
-        Output.indentLevel--;
-        sb.append(Output.indent(0)).append("}");
-        return sb.toString();
-    }
-
 }

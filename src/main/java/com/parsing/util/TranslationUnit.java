@@ -1,4 +1,3 @@
-
 package com.parsing.util;
 
 import com.parsing.output.ContextHolder;
@@ -34,16 +33,5 @@ public class TranslationUnit {
         if (mainMethod != null)
             throw new IllegalArgumentException("Main method already set");
         mainMethod = mainDecl;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        if (mainMethod != null)
-            builder.append(mainMethod);
-        for (ClassDeclaration classDecl : classDeclarations) {
-            builder.append(classDecl.toString());
-        }
-        return builder.toString();
     }
 }

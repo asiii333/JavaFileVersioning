@@ -4,8 +4,6 @@ import com.parsing.output.ContextHolder;
 import com.parsing.parser.JavaParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,55 +40,7 @@ public class Expression extends SyntaxTreeElement {
         isParExpression = true;
     }
 
-    public boolean isPointerType() {
-        if (ctx.primary() != null) {
-            String s = ctx.primary().getText();
-            if (parentMethod.containsObject(s)
-                    || parentClass.hasObjectMember(ctx.primary().getText())) {
-                return true;
-            }
-        } else if (ctx.children.size() >= 3
-                && ctx.children.get(1).getText().equals("(")
-                && expressions.get(0).isPointerType()) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (isParExpression) {
-            sb.append("(");
-        }
-        if (ctx.Identifier() != null
-                && expressions.get(0).isPointerType() && !instanceOf) {
-            sb.append(expressions.get(0).toString());
-            sb.append("->");
-            sb.append(ctx.Identifier().getText());
-        } else if (!instanceOf) {
-            Iterator<Expression> iter = expressions.iterator();
-            for (ParseTree pt : ctx.children) {
-                if (pt instanceof JavaParser.ExpressionContext) {
-                    sb.append(iter.next().toString());
-                } else {
-                    sb.append(pt.getText());
-                }
-                sb.append(" ");
-            }
-            sb.setLength(sb.length() - 1);
-        } else {
-            sb.append("typeid(" + expressions.get(0).toString() + ") == typeid(");
-            sb.append(ctx.type().getText() + (ctx.type().classOrInterfaceType() != null ? "*":"")  + ")");
-        }
-        if (isParExpression) {
-            sb.append(")");
-        }
-        return sb.toString();
-    }
-
     public void setParExpression(boolean isParExpression) {
         this.isParExpression = isParExpression;
     }
-
 }
